@@ -1,0 +1,30 @@
+{
+    "name": "veejay/report",
+    "description": "Progress report based on activity in GIT repositories",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Evgen",
+            "email": "veejayspb@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=8.0",
+        "ext-zip": "*",
+        "veejay/container": "^1.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "10.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Veejay\\Report\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\": "test/"
+        }
+    }
+}
