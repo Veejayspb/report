@@ -26,5 +26,10 @@
         "psr-4": {
             "Test\\": "test/"
         }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "@php install.php"
+        ]
     }
 }
