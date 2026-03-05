@@ -6,6 +6,7 @@ namespace Veejay\Report;
 use DateTime;
 use Psr\Container\ContainerInterface;
 use Veejay\Report\Component\Config;
+use Veejay\Report\Factory\DocxFactory;
 use Veejay\Report\Git\Commit;
 use Veejay\Report\Git\RepositoriesCollection;
 
@@ -73,7 +74,7 @@ class Application
         }
 
         $output = sprintf('%s/report/report_%d-%d.docx', dirname(__DIR__), $year, str_pad((string)$month, 2, '0', STR_PAD_LEFT));
-        $docx = new Docx(__DIR__ . '/Template/main.docx');
+        $docx = (new DocxFactory)->createByDays($days);
         $docx->run($output, $this->config->placeholders + $placeholders);
     }
 

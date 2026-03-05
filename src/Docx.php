@@ -10,6 +10,10 @@ use ZipArchive;
 
 class Docx
 {
+    /**
+     * Путь до файла DOCX с шаблоном.
+     * @var string
+     */
     protected string $input;
 
     /**
@@ -21,8 +25,9 @@ class Docx
     }
 
     /**
-     * @param string $output
-     * @param array $placeholders
+     * Заполнить DOCX шаблон данными и положить по указанному адресу.
+     * @param string $output - путь до готового DOCX документа.
+     * @param array $placeholders - массив плейсхолдеров для замены в шаблоне
      * @return void
      */
     public function run(string $output, array $placeholders): void
@@ -44,21 +49,22 @@ class Docx
         $this->zip($tempDir, $output, $files);
 
         // Удаляем временную директорию
-        $this->rrmdir($tempDir);
+        $this->removeDir($tempDir);
     }
 
     /**
+     * Удалить указанную директорию.
      * @param string $dir
      */
-    protected function rrmdir(string $dir): void
+    protected function removeDir(string $dir): void
     {
         foreach (scandir($dir) as $file) {
             if ($file === '.' || $file === '..') {
                 continue;
             }
 
-            $path = "$dir/$file";
-            is_dir($path) ? $this->rrmdir($path) : unlink($path);
+            $path = $dir . DIRECTORY_SEPARATOR . $file;
+            is_dir($path) ? $this->removeDir($path) : unlink($path);
         }
 
         rmdir($dir);
