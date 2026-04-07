@@ -73,7 +73,12 @@ class Application
             $placeholders["{$d}_body"] = $body;
         }
 
-        $output = sprintf('%s/report/report_%d-%d.docx', dirname(__DIR__), $year, str_pad((string)$month, 2, '0', STR_PAD_LEFT));
+        $output = sprintf(
+            '%s/report/report_%s-%s.docx',
+            dirname(__DIR__),
+            $year,
+            str_pad((string)$month, 2, '0', STR_PAD_LEFT)
+        );
         $docx = (new DocxFactory)->createByDays($days);
         $docx->run($output, $this->config->placeholders + $placeholders);
     }
