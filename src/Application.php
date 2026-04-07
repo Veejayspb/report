@@ -117,9 +117,10 @@ class Application
             $repository = $collection->getRepository($path);
             $commits = $repository->getCommitsByDate($dateTime);
 
-            $commits = array_filter($commits, function (Commit $commit) {
-                // TODO: фильтровать Merge коммиты
-                return in_array($commit->email, $this->config->emails);
+            $commits = array_filter($commits, function (Commit $commit) use ($repository) {
+                return
+                    in_array($commit->email, $this->config->emails) &&
+                    !$repository->isMergeCommit($commit->hash); // Фильтровать Merge коммиты
             });
 
             foreach ($commits as $commit) {

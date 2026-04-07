@@ -86,6 +86,26 @@ class Repository
     }
 
     /**
+     * Является ли указанный коммит MERGE.
+     * @param string $hash
+     * @return bool
+     */
+    public function isMergeCommit(string $hash): bool
+    {
+        $command = sprintf('"%s" cat-file -p %s', $this->git->getPath(), $hash);
+        $lines = $this->exec($command);
+
+        $parent = 0;
+        foreach ($lines as $line) {
+            if (str_starts_with($line, 'parent')) {
+                $parent++;
+            }
+        }
+
+        return 1 < $parent;
+    }
+
+    /**
      * Список названий веток.
      * @return array
      */
